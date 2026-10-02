@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}A.I.M.S — Minimalist Hardware Catalog{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="theme-light">
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="{% url 'catalog:product_list' %}" class="brand">
+                <span class="brand-symbol">◈</span>
+                <span class="brand-text">A.I.M.S</span>
+            </a>
+
+            <div class="header-actions">
+                <a href="/admin/" class="admin-link" title="Open Django Admin">Admin</a>
+                <button id="themeToggle" class="theme-btn" aria-label="Toggle dark/light mode">
+                    <span class="theme-icon">◐</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p class="footer-copy">© {% now "Y" %} A.I.M.S · Minimal Catalog Showcase</p>
+            <p class="footer-note">Simple showcase view · Direct pricing · No checkout</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple dark/light mode toggle with persistence
+        const toggleBtn = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('aims_theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.replace('theme-light', 'theme-dark');
+        }
+
+        toggleBtn?.addEventListener('click', () => {
+            if (document.body.classList.contains('theme-light')) {
+                document.body.classList.replace('theme-light', 'theme-dark');
+                localStorage.setItem('aims_theme', 'dark');
+            } else {
+                document.body.classList.replace('theme-dark', 'theme-light');
+                localStorage.setItem('aims_theme', 'light');
+            }
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

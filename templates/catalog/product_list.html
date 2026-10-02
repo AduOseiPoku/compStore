@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}A.I.M.S — Minimalist Hardware Catalog{% endblock %}
+
+{% block content %}
+<section class="catalog-intro">
+    <div class="intro-headline">
+        <h1 class="page-title">Curated Hardware</h1>
+        <p class="page-subtitle">Pristine devices & components. Clean specs, direct pricing.</p>
+    </div>
+
+    <form method="get" action="{% url 'catalog:product_list' %}" class="search-form">
+        <div class="search-input-wrap">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+                type="text" 
+                name="q" 
+                value="{{ query }}" 
+                placeholder="Search models, chips, or specifications..." 
+                class="search-input"
+                autocomplete="off"
+            >
+            {% if selected_category %}
+                <input type="hidden" name="category" value="{{ selected_category }}">
+            {% endif %}
+            {% if query %}
+                <a href="{% url 'catalog:product_list' %}{% if selected_category %}?category={{ selected_category }}{% endif %}" class="search-clear" title="Clear search">✕</a>
+            {% endif %}
+        </div>
+    </form>
+</section>
+
+<!-- Minimalist Category Navigation -->
+<nav class="category-bar">
+    <a href="{% url 'catalog:product_list' %}{% if query %}?q={{ query }}{% endif %}" 
+       class="category-pill {% if not selected_category %}active{% endif %}">
+       All Items <span class="count">({{ total_items }})</span>
+    </a>
+    {% for cat in categories %}
+        <a href="{% url 'catalog:product_list' %}?category={{ cat.slug }}{% if query %}&q={{ query }}{% endif %}" 
+           class="category-pill {% if selected_category == cat.slug %}active{% endif %}">
+           {{ cat.name }}
+        </a>
+    {% endfor %}
+</nav>
+
+<!-- Product Grid -->
+{% if products %}
+<div class="product-grid">
+    {% for product in products %}
+    <article class="product-card">
+        <a href="{% url 'catalog:product_detail' product.pk %}" class="card-link" aria-label="View {{ product.name }}">
+            <div class="card-media">
+                <img src="{{ product.display_image }}" alt="{{ product.name }}" loading="lazy" class="product-img">
+                {% if product.is_featured %}
+                    <span class="badge badge-featured">Featured</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <div class="card-meta">
+                    <span class="product-category">{{ product.category.name|default:"Hardware" }}</span>
+                    {% if product.in_stock %}
+                        <span class="stock-badge in-stock"><span class="dot"></span> Available</span>
+                    {% else %}
+                        <span class="stock-badge out-stock">Unavailable</span>
+                    {% endif %}
+                </div>
+                <h2 class="product-name">{{ product.name }}</h2>
+                {% if product.tagline %}
+                    <p class="product-tagline">{{ product.tagline }}</p>
+                {% endif %}
+                <div class="card-bottom">
+                    <div class="product-price">
+                        <span class="currency">GH₵</span>{{ product.price|floatformat:2 }}
+                    </div>
+                    <span class="view-prompt">Details →</span>
+                </div>
+            </div>
+        </a>
+    </article>
+    {% endfor %}
+</div>
+
+<!-- Minimalist Pagination -->
+{% if page_obj.has_other_pages %}
+<nav class="pagination-bar">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if query %}&q={{ query }}{% endif %}" class="page-nav-btn">← Previous</a>
+    {% else %}
+        <span class="page-nav-btn disabled">← Previous</span>
+    {% endif %}
+
+    <span class="page-indicator">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} ({{ total_items }} items)</span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if query %}&q={{ query }}{% endif %}" class="page-nav-btn">Next →</a>
+    {% else %}
+        <span class="page-nav-btn disabled">Next →</span>
+    {% endif %}
+</nav>
+{% endif %}
+{% else %}
+<div class="empty-state">
+    <div class="empty-icon">∅</div>
+    <h3>No items found</h3>
+    <p>There are no products matching your search or category filter.</p>
+    <a href="{% url 'catalog:product_list' %}" class="btn-reset">Reset Filters</a>
+</div>
+{% endif %}
+{% endblock %}

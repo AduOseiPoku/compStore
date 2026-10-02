@@ -1,0 +1,187 @@
+[
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "name": "Laptops",
+    "slug": "laptops"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 2,
+  "fields": {
+    "name": "Displays",
+    "slug": "displays"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 3,
+  "fields": {
+    "name": "Desktops",
+    "slug": "desktops"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 4,
+  "fields": {
+    "name": "Peripherals",
+    "slug": "peripherals"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "name": "MacBook Pro 16\" (Space Black)",
+    "tagline": "Apple M3 Pro · 18GB Unified Memory · 512GB SSD",
+    "price": "35000.00",
+    "description": "Liquid Retina XDR display with ProMotion technology.\nExtreme dynamic range with 1000 nits sustained full-screen brightness.\nUp to 22 hours of battery life with silent thermal design.",
+    "image": "",
+    "image_url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1000&q=80",
+    "in_stock": true,
+    "is_featured": true,
+    "created_at": "2026-10-02T22:51:46.533Z",
+    "updated_at": "2026-10-02T23:07:55.453Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "name": "ThinkPad X1 Carbon Gen 11",
+    "tagline": "Intel Core i7-1365U · 32GB LPDDR5 · 1TB NVMe Gen4",
+    "price": "22500.00",
+    "description": "Ultra-lightweight carbon fiber chassis at 1.12kg.\n14-inch 2.8K OLED anti-glare display with 100% DCI-P3 coverage.\nMil-SPEC tested durability with signature TrackPoint keyboard.",
+    "image": "",
+    "image_url": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=1000&q=80",
+    "in_stock": true,
+    "is_featured": false,
+    "created_at": "2026-10-02T22:51:46.568Z",
+    "updated_at": "2026-10-02T23:07:55.484Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 3,
+  "fields": {
+    "category": 2,
+    "name": "Dell UltraSharp 32\" 4K Video Conferencing Monitor",
+    "tagline": "4K IPS Black Panel · 2000:1 Contrast · 90W USB-C Power Delivery",
+    "price": "12500.00",
+    "description": "Experience deep blacks and exceptional color contrast with IPS Black technology.\nIntegrated 4K Sony Starvis sensor webcam and echo-canceling dual microphones.\nDaisy-chain capable with dual DisplayPort and RJ45 Ethernet hub.",
+    "image": "",
+    "image_url": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=1000&q=80",
+    "in_stock": true,
+    "is_featured": true,
+    "created_at": "2026-10-02T22:51:46.603Z",
+    "updated_at": "2026-10-02T23:07:55.510Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 4,
+  "fields": {
+    "category": 2,
+    "name": "Studio Display 27\" 5K Retina",
+    "tagline": "5120 × 2880 Resolution · 600 nits · True Tone · Studio Mics",
+    "price": "21000.00",
+    "description": "All-aluminum frame with slim profile.\n12MP Ultra Wide camera with Center Stage.\nSix-speaker sound system with Spatial Audio for immersive acoustics.",
+    "image": "",
+    "image_url": "https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=1000&q=80",
+    "in_stock": true,
+    "is_featured": false,
+    "created_at": "2026-10-02T22:51:46.636Z",
+    "updated_at": "2026-10-02T23:07:55.534Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 5,
+  "fields": {
+    "category": 3,
+    "name": "Custom Compact SFF Mini-ITX Rig",
+    "tagline": "AMD Ryzen 9 7900X · RTX 4080 16GB · 32GB DDR5 6000MHz",
+    "price": "38500.00",
+    "description": "Anodized sandblasted aluminum chassis under 11 Liters.\nLiquid cooled with 240mm AIO and PCIe 4.0 riser.\nZero RGB stealth build tuned for maximum performance and silence.",
+    "image": "",
+    "image_url": "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1000&q=80",
+    "in_stock": true,
+    "is_featured": true,
+    "created_at": "2026-10-02T22:51:46.668Z",
+    "updated_at": "2026-10-02T23:07:55.561Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 6,
+  "fields": {
+    "category": 4,
+    "name": "Keychron Q1 Pro Wireless Custom Keyboard",
+    "tagline": "Full CNC Machined Aluminum · QMK/VIA Programmable · Gateron Jupiter",
+    "price": "2800.00",
+    "description": "Double-gasket mount design for refined acoustic feel.\nHot-swappable PCB supporting both 3-pin and 5-pin mechanical switches.\nConnects via Bluetooth 5.1 or USB-C wired mode.",
+    "image": "",
+    "image_url": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=1000&q=80",
+    "in_stock": true,
+    "is_featured": false,
+    "created_at": "2026-10-02T22:51:46.705Z",
+    "updated_at": "2026-10-02T23:07:55.589Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 7,
+  "fields": {
+    "category": 4,
+    "name": "Logitech MX Master 3S Ergonomic Mouse",
+    "tagline": "Quiet Click Tech · 8K DPI Track on Glass · MagSpeed Electromagnetic Scroll",
+    "price": "1400.00",
+    "description": "Ergonomic silhouette sculpted for palm support.\nQuiet Clicks provide satisfying tactile feel with 90% less click noise.\nCross-computer control with Logitech Flow.",
+    "image": "",
+    "image_url": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1000&q=80",
+    "in_stock": true,
+    "is_featured": false,
+    "created_at": "2026-10-02T22:51:46.772Z",
+    "updated_at": "2026-10-02T23:07:55.616Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 8,
+  "fields": {
+    "category": 4,
+    "name": "Samsung 990 PRO 2TB NVMe PCIe 4.0 M.2 SSD",
+    "tagline": "7,450 MB/s Sequential Read · 6,900 MB/s Sequential Write",
+    "price": "2600.00",
+    "description": "Flagship solid state drive engineered for heavy gaming, 3D rendering, and 4K video editing.\nNickel-coated controller and smart thermal control algorithm.\nBacked by Samsung Magician Software.",
+    "image": "",
+    "image_url": "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=1000&q=80",
+    "in_stock": true,
+    "is_featured": false,
+    "created_at": "2026-10-02T22:51:46.806Z",
+    "updated_at": "2026-10-02T23:07:55.638Z"
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$oYi3QnlJ82fC2AwBb5bGrn$7RpLrR4dOQuzi4m8QcIlqcqs12iGVb8PaVxbviK4NXc=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@example.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-10-02T22:51:44.516Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]

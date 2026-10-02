@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} — A.I.M.S{% endblock %}
+
+{% block content %}
+<div class="product-detail-view">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <a href="{% url 'catalog:product_list' %}" class="back-link">← All Products</a>
+        {% if product.category %}
+            <span class="sep">/</span>
+            <a href="{% url 'catalog:product_list' %}?category={{ product.category.slug }}">{{ product.category.name }}</a>
+        {% endif %}
+    </nav>
+
+    <!-- Main Detail Layout -->
+    <div class="detail-grid">
+        <!-- Media Column -->
+        <div class="detail-gallery">
+            <div class="detail-img-box">
+                <img src="{{ product.display_image }}" alt="{{ product.name }}" class="detail-img">
+                {% if product.is_featured %}
+                    <span class="badge badge-featured">Featured Item</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Info Column -->
+        <div class="detail-info">
+            <div class="info-top">
+                <span class="product-category">{{ product.category.name|default:"Hardware" }}</span>
+                {% if product.in_stock %}
+                    <span class="stock-badge in-stock"><span class="dot"></span> In Stock</span>
+                {% else %}
+                    <span class="stock-badge out-stock">Currently Unavailable</span>
+                {% endif %}
+            </div>
+
+            <h1 class="detail-title">{{ product.name }}</h1>
+
+            {% if product.tagline %}
+                <p class="detail-tagline">{{ product.tagline }}</p>
+            {% endif %}
+
+            <div class="detail-price-box">
+                <span class="price-label">Price</span>
+                <div class="detail-price">
+                    <span class="currency">GH₵</span>{{ product.price|floatformat:2 }}
+                </div>
+            </div>
+
+            {% if product.description %}
+            <div class="detail-specs">
+                <h3>Details & Specifications</h3>
+                <div class="specs-content">
+                    {{ product.description|linebreaks }}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Minimalist Inquire/Action Bar (No Checkout/No Payments) -->
+            <div class="inquiry-box">
+                <button type="button" class="btn btn-inquire" id="inquireBtn" onclick="copyProductInquiry()">
+                    <span id="btnText">Copy Item Reference</span>
+                </button>
+                <a href="mailto:?subject=Inquiry regarding {{ product.name|urlencode }}&body=Hi, I am interested in {{ product.name }} listed at GH₵{{ product.price }}." class="btn btn-secondary">
+                    Contact via Email
+                </a>
+            </div>
+            <p class="inquiry-hint">Showcase catalog mode. No online payments or cart required.</p>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    {% if related_products %}
+    <section class="related-section">
+        <h2 class="section-title">Related Items</h2>
+        <div class="product-grid">
+            {% for rel in related_products %}
+            <article class="product-card">
+                <a href="{% url 'catalog:product_detail' rel.pk %}" class="card-link">
+                    <div class="card-media">
+                        <img src="{{ rel.display_image }}" alt="{{ rel.name }}" loading="lazy" class="product-img">
+                    </div>
+                    <div class="card-body">
+                        <span class="product-category">{{ rel.category.name|default:"Hardware" }}</span>
+                        <h3 class="product-name">{{ rel.name }}</h3>
+                        <div class="card-bottom">
+                            <div class="product-price">
+                                <span class="currency">GH₵</span>{{ rel.price|floatformat:2 }}
+                            </div>
+                            <span class="view-prompt">View →</span>
+                        </div>
+                    </div>
+                </a>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function copyProductInquiry() {
+    const text = "{{ product.name }} (GH₵{{ product.price }}) - Ref: #{{ product.pk }}";
+    navigator.clipboard.writeText(text).then(() => {
+        const btnText = document.getElementById('btnText');
+        const original = btnText.innerText;
+        btnText.innerText = "✓ Copied to clipboard!";
+        setTimeout(() => {
+            btnText.innerText = original;
+        }, 2500);
+    });
+}
+</script>
+{% endblock %}
