@@ -1,0 +1,15 @@
+.git
+.gitignore
+.env
+.venv
+venv
+env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+db.sqlite3-journal
+data_backup.json
+staticfiles
+media
