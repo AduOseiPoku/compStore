@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+
+{% block title %}About Our Store & Workshop Standards — {{ STORE_NAME }}{% endblock %}
+
+{% block content %}
+<!-- About Hero -->
+<section class="about-hero">
+    <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>OUR PHILOSOPHY & WORKSHOP</span>
+    </div>
+    <h1 class="page-title">Honest Hardware. Precision Engineering.</h1>
+    <p class="page-subtitle">
+        Founded in {{ STORE_CITY }} to eliminate the uncertainty of buying computers and fixing tech. We combine an authentic showroom with a component-level laboratory.
+    </p>
+</section>
+
+<!-- Our Story Section -->
+<section class="section about-story-section">
+    <div class="story-grid">
+        <div class="story-text">
+            <span class="section-tag">WHY WE BUILT A.I.M.S</span>
+            <h2 class="section-heading">Setting a New Standard for Computer Retail & Repair in obuasi,ghana</h2>
+            <p>
+                For years, buying laptops or desktop computers in local markets was a gamble. Buyers had to deal with unverified battery wear, covert liquid damage, hidden display defects, and technicians who disappear when things go wrong.
+            </p>
+            <p>
+                <strong>A.I.M.S was established with a singular principle: absolute transparency.</strong>
+            </p>
+            <p>
+                Whether you purchase a brand-new factory-sealed workstation or a certified Grade-A refurbished MacBook, every device in our inventory undergoes an exhaustive 28-point laboratory stress test. We supply direct prices in GH₵, clear specifications, and genuine written store warranties with every receipt.
+            </p>
+            <div class="story-stats-row">
+                <div class="s-stat">
+                    <strong>1,200+</strong>
+                    <span>Devices Tested & Deployed</span>
+                </div>
+                <div class="s-stat">
+                    <strong>99.4%</strong>
+                    <span>First-Time Fix Success Rate</span>
+                </div>
+                <div class="s-stat">
+                    <strong>6–12 Mo</strong>
+                    <span>Warranty on All Machines</span>
+                </div>
+            </div>
+        </div>
+        <div class="story-visual">
+            <div class="lab-card">
+                <div class="lab-card-badge">THE A.I.M.S PROMISE</div>
+                <ul class="promise-list">
+                    <li>
+                        <span class="p-num">01</span>
+                        <div>
+                            <strong>No Counterfeits or Knockoffs</strong>
+                            <p>We source authentic OEM displays, original batteries, and Tier-1 brand power supplies.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="p-num">02</span>
+                        <div>
+                            <strong>Comprehensive Written Warranty</strong>
+                            <p>Every purchase comes with signed paperwork detailing the exact coverage and dates.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="p-num">03</span>
+                        <div>
+                            <strong>Direct Technician Access</strong>
+                            <p>Speak straight with the engineer working on your PC via WhatsApp or across our bench.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="p-num">04</span>
+                        <div>
+                            <strong>Fast Turnaround Times</strong>
+                            <p>Screen and battery replacements are typically completed within the same day.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- The 28-Point QA Process -->
+<section class="section qa-section">
+    <div class="section-header">
+        <span class="section-tag">BENCH PROTOCOL</span>
+        <h2 class="section-heading">Our 28-Point Diagnostic & QA Inspection</h2>
+        <p class="section-subtext">Before any device is put on display or dispatched for delivery, it must pass every single checkpoint below:</p>
+    </div>
+
+    <div class="qa-grid">
+        <div class="qa-category-card">
+            <div class="qa-cat-header">
+                <span class="qa-icon">⚡</span>
+                <h3>Power & Battery Health</h3>
+            </div>
+            <ul class="qa-checklist">
+                <li>Battery cycle count & real capacity (>85% required)</li>
+                <li>Fast-charging circuit & USB-C Power Delivery</li>
+                <li>DC jack / MagSafe port physical & voltage test</li>
+                <li>Sleep / wake power drain measurement</li>
+            </ul>
+        </div>
+
+        <div class="qa-category-card">
+            <div class="qa-cat-header">
+                <span class="qa-icon">🖥️</span>
+                <h3>Display & Visual Subsystem</h3>
+            </div>
+            <ul class="qa-checklist">
+                <li>Full-screen RGB dead/stuck pixel check</li>
+                <li>Backlight uniformity & IPS glow analysis</li>
+                <li>Hinge resistance & ribbon cable stress test</li>
+                <li>Color gamut calibration & True Tone sensor test</li>
+            </ul>
+        </div>
+
+        <div class="qa-category-card">
+            <div class="qa-cat-header">
+                <span class="qa-icon">🔥</span>
+                <h3>Thermals & Stress Performance</h3>
+            </div>
+            <ul class="qa-checklist">
+                <li>2-hour Cinebench R23 / FurMark full-load test</li>
+                <li>Thermal throttling curve under sustained load</li>
+                <li>Fan bearing noise & acoustic inspection</li>
+                <li>Fresh premium Arctic MX-6 / Liquid Metal repaste</li>
+            </ul>
+        </div>
+
+        <div class="qa-category-card">
+            <div class="qa-cat-header">
+                <span class="qa-icon">💾</span>
+                <h3>Storage & Memory Integrity</h3>
+            </div>
+            <ul class="qa-checklist">
+                <li>CrystalDiskInfo SSD health (0 reallocated sectors)</li>
+                <li>Sequential & random 4K read/write speed verification</li>
+                <li>Multi-pass MemTest86 RAM stability check</li>
+                <li>Clean OS installation with latest official drivers</li>
+            </ul>
+        </div>
+
+        <div class="qa-category-card">
+            <div class="qa-cat-header">
+                <span class="qa-icon">⌨️</span>
+                <h3>I/O, Audio & Input</h3>
+            </div>
+            <ul class="qa-checklist">
+                <li>Every keyboard key switch tested for tactile response</li>
+                <li>Multi-touch trackpad gesture & haptic feedback check</li>
+                <li>Dual stereo speaker frequency sweep (no rattle)</li>
+                <li>Microphone array & HD webcam clarity test</li>
+            </ul>
+        </div>
+
+        <div class="qa-category-card">
+            <div class="qa-cat-header">
+                <span class="qa-icon">📶</span>
+                <h3>Wireless & Port Connectivity</h3>
+            </div>
+            <ul class="qa-checklist">
+                <li>Wi-Fi 6 / 6E throughput & signal sensitivity</li>
+                <li>Bluetooth 5.x peripheral pairing & range</li>
+                <li>HDMI 2.1 & DisplayPort external monitor output</li>
+                <li>Gigabit Ethernet RJ-45 packet transfer check</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Warranty Terms Section -->
+<section class="section warranty-section" id="warranty">
+    <div class="warranty-card">
+        <span class="section-tag tag-accent">OUR GUARANTEE</span>
+        <h2 class="warranty-title">Transparent Warranty & Protection Terms</h2>
+        <p class="warranty-desc">
+            We don't rely on verbal promises. Every hardware sale and repair from A.I.M.S comes with clear, written documentation.
+        </p>
+
+        <div class="warranty-terms-grid">
+            <div class="w-term">
+                <span class="term-num">1</span>
+                <h4>6 to 12 Months Hardware Coverage</h4>
+                <p>Covers motherboard logic boards, processor, dedicated graphics chip, system memory, SSD, and display panel against manufacturing or component defects.</p>
+            </div>
+            <div class="w-term">
+                <span class="term-num">2</span>
+                <h4>7-Day Peace of Mind Swap</h4>
+                <p>If you discover any functional anomaly within the first 7 days of collection or delivery, bring it back for immediate diagnostic priority or unit replacement.</p>
+            </div>
+            <div class="w-term">
+                <span class="term-num">3</span>
+                <h4>Repair Labor & Parts Warranty</h4>
+                <p>All replacement screens, batteries, and micro-soldered components installed during workshop repairs carry a 30 to 90-day parts-and-labor warranty.</p>
+            </div>
+        </div>
+
+        <div class="warranty-cta">
+            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hi%20A.I.M.S,%20I'd%20like%20to%20ask%20a%20question%20about%20your%20warranty%20policy" target="_blank" rel="noopener" class="btn btn-wa-pill">
+                Questions on Warranty? Ask on WhatsApp →
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+{% if testimonials %}
+<section class="section testimonials-section">
+    <div class="section-header">
+        <span class="section-tag">VERIFIED CLIENT REVIEWS</span>
+        <h2 class="section-heading">Trusted by obuasi,ghana's Creative & Engineering Community</h2>
+    </div>
+
+    <div class="testimonials-grid">
+        {% for t in testimonials %}
+        <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">"{{ t.quote }}"</p>
+            <div class="testimonial-author-box">
+                <div class="author-avatar">{{ t.client_name|slice:":1" }}</div>
+                <div>
+                    <h4 class="author-name">{{ t.client_name }}</h4>
+                    <p class="author-role">{{ t.role_or_location }}</p>
+                    <span class="author-service">Service: {{ t.service_rendered }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -7,7 +7,8 @@ python manage.py collectstatic --noinput
 echo "--> Applying database migrations..."
 python manage.py migrate --noinput
 
-echo "--> Seeding/verifying catalog products..."
+echo "--> Seeding/verifying catalog services and products..."
+python manage.py seed_catalog || true
 python manage.py seed_100_products || true
 
 echo "--> Starting Gunicorn web server on port ${PORT:-8000}..."

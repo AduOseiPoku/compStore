@@ -3,45 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}A.I.M.S — Minimalist Hardware Catalog{% endblock %}</title>
+    <title>{% block title %}{{ STORE_NAME }} — High-Performance Hardware & Workshop{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{{ STORE_TAGLINE }} in {{ STORE_CITY }}. Curated laptops, custom desktop rigs, diagnostic repairs, and device trade-ins.{% endblock %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
     {% block extra_head %}{% endblock %}
 </head>
 <body class="theme-light">
+    <!-- Announcement & Status Bar -->
+    <div class="top-announcement-bar">
+        <div class="container top-bar-inner">
+            <div class="top-bar-left">
+                <span class="status-indicator-dot"></span>
+                <span class="top-bar-text"><strong>Workshop Open</strong> · {{ STORE_HOURS_SHORT }} · {{ STORE_CITY }}</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="tel:{{ STORE_PHONE }}" class="top-link">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    <span>{{ STORE_PHONE }}</span>
+                </a>
+                <span class="top-sep">|</span>
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hi%20A.I.M.S,%20I'd%20like%20to%20inquire%20about%20your%20products%20and%20repair%20services" target="_blank" rel="noopener" class="top-link top-link-wa">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                    <span>Instant WhatsApp Desk</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Site Header -->
     <header class="site-header">
         <div class="container header-inner">
-            <a href="{% url 'catalog:product_list' %}" class="brand">
+            <a href="{% url 'catalog:home' %}" class="brand" aria-label="{{ STORE_NAME }} Home">
                 <span class="brand-symbol">◈</span>
                 <span class="brand-text">A.I.M.S</span>
+                <span class="brand-badge">TECH LAB</span>
             </a>
 
+            <!-- Desktop Navigation -->
+            <nav class="desktop-nav" aria-label="Main Navigation">
+                <a href="{% url 'catalog:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+                <a href="{% url 'catalog:product_list' %}" class="nav-link {% if request.resolver_match.url_name == 'product_list' or request.resolver_match.url_name == 'product_detail' %}active{% endif %}">Hardware Catalog</a>
+                <a href="{% url 'catalog:services' %}" class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}">Services & Workshop</a>
+                <a href="{% url 'catalog:about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About & QA</a>
+                <a href="{% url 'catalog:contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact & Visit</a>
+            </nav>
+
             <div class="header-actions">
-                <a href="/admin/" class="admin-link" title="Open Django Admin">Admin</a>
-                <button id="themeToggle" class="theme-btn" aria-label="Toggle dark/light mode">
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20A.I.M.S,%20I'm%20reaching%20out%20from%20your%20website" target="_blank" rel="noopener" class="btn btn-header-wa" aria-label="Chat on WhatsApp">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                    <span class="btn-header-wa-text">Chat With Tech</span>
+                </a>
+                <button id="themeToggle" class="theme-btn" aria-label="Toggle dark/light mode" title="Switch theme">
                     <span class="theme-icon">◐</span>
+                </button>
+                <a href="/admin/" class="admin-link header-admin-link" title="Open Django Admin">Admin</a>
+
+                <!-- Mobile Hamburger Toggle -->
+                <button id="mobileMenuToggle" class="mobile-toggle-btn" aria-label="Open mobile menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
                 </button>
             </div>
         </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobileDrawer" class="mobile-drawer" aria-hidden="true">
+            <nav class="mobile-nav">
+                <a href="{% url 'catalog:home' %}" class="mobile-nav-link">Home</a>
+                <a href="{% url 'catalog:product_list' %}" class="mobile-nav-link">Hardware Catalog</a>
+                <a href="{% url 'catalog:services' %}" class="mobile-nav-link">Services & Workshop</a>
+                <a href="{% url 'catalog:about' %}" class="mobile-nav-link">About & QA Standards</a>
+                <a href="{% url 'catalog:contact' %}" class="mobile-nav-link">Contact & Store Visit</a>
+                <a href="/admin/" class="mobile-nav-link mobile-admin-link">Django Admin ↗</a>
+                <div class="mobile-drawer-contact">
+                    <p class="mobile-drawer-title">Store Hours & Direct Line</p>
+                    <p class="mobile-drawer-info">{{ STORE_HOURS }}</p>
+                    <a href="https://wa.me/{{ STORE_WHATSAPP }}" target="_blank" rel="noopener" class="btn btn-wa-block">
+                        Chat on WhatsApp ({{ STORE_WHATSAPP_DISPLAY }})
+                    </a>
+                </div>
+            </nav>
+        </div>
     </header>
 
-    <main class="site-main">
-        <div class="container">
-            {% block content %}{% endblock %}
+    <!-- Global Flash Messages -->
+    {% if messages %}
+    <div class="container message-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <span class="alert-icon">{% if message.tags == 'success' %}✓{% else %}ℹ{% endif %}</span>
+            <span class="alert-text">{{ message }}</span>
         </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content Injection -->
+    <main class="site-main">
+        {% block content %}{% endblock %}
     </main>
 
+    <!-- Floating WhatsApp Action Pill -->
+    <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20A.I.M.S,%20I'm%20browsing%20your%20site%20and%20have%20a%20question" 
+       target="_blank" 
+       rel="noopener" 
+       class="floating-wa-btn" 
+       aria-label="Direct WhatsApp Chat with our Technician" 
+       title="Chat with our Technician">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zM17.47 16.42c-.23.65-1.15 1.2-1.6 1.25-.43.05-.99.07-3.15-.81-2.76-1.12-4.54-3.95-4.68-4.13-.14-.19-1.12-1.49-1.12-2.85 0-1.35.71-2.02.96-2.29.25-.27.55-.34.74-.34.18 0 .37 0 .53.01.17.01.4.06.61.57.23.55.77 1.88.84 2.02.07.14.12.31.02.5-.09.19-.14.31-.28.47-.14.16-.3.35-.43.47-.14.14-.29.29-.12.57.16.29.73 1.2 1.57 1.95 1.08.96 1.99 1.26 2.28 1.4.29.14.46.12.63-.07.17-.19.74-.86.94-1.15.2-.29.4-.24.67-.14.28.1.1.75.52 1.28.42.53.7.88.74.96.05.08.05.47-.18 1.12z"/>
+        </svg>
+        <span class="floating-wa-label">Ask a Technician</span>
+    </a>
+
+    <!-- Comprehensive Tech Store Footer -->
     <footer class="site-footer">
-        <div class="container footer-inner">
-            <p class="footer-copy">© {% now "Y" %} A.I.M.S · Minimal Catalog Showcase</p>
-            <p class="footer-note">Simple showcase view · Direct pricing · No checkout</p>
+        <div class="container footer-grid">
+            <!-- Col 1: Brand & Mission -->
+            <div class="footer-col">
+                <a href="{% url 'catalog:home' %}" class="brand brand-footer">
+                    <span class="brand-symbol">◈</span>
+                    <span class="brand-text">A.I.M.S</span>
+                    <span class="brand-badge">TECH LAB</span>
+                </a>
+                <p class="footer-desc">
+                    Your trusted hardware destination in {{ STORE_CITY }}. We curate high-performance laptops, assemble custom workstation rigs, and operate a certified component repair laboratory.
+                </p>
+                <div class="footer-badges">
+                    <span class="f-badge">✓ 100% Bench Tested</span>
+                    <span class="f-badge">✓ Warranty Guaranteed</span>
+                    <span class="f-badge">✓ Direct WhatsApp Support</span>
+                </div>
+            </div>
+
+            <!-- Col 2: What We Do (Services) -->
+            <div class="footer-col">
+                <h3 class="footer-title">What We Do</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'catalog:services' %}">Hardware Diagnostics & Repair</a></li>
+                    <li><a href="{% url 'catalog:services' %}?service=custom-pc-builds">Custom PC Builds & Rigs</a></li>
+                    <li><a href="{% url 'catalog:services' %}?service=performance-thermal-tuning">RAM & NVMe SSD Upgrades</a></li>
+                    <li><a href="{% url 'catalog:services' %}?service=performance-thermal-tuning">Thermal Paste & Liquid Repaste</a></li>
+                    <li><a href="{% url 'catalog:services' %}?service=device-trade-in">Device Trade-In & Swaps</a></li>
+                    <li><a href="{% url 'catalog:services' %}?service=corporate-procurement">Corporate IT Procurement</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 3: Hardware Showroom -->
+            <div class="footer-col">
+                <h3 class="footer-title">Hardware Catalog</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'catalog:product_list' %}?category=laptops">Professional Laptops & MacBooks</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?category=desktops">Custom Workstations & Rigs</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?category=displays">4K & 5K Studio Displays</a></li>
+                    <li><a href="{% url 'catalog:product_list' %}?category=peripherals">Keyboards, Mice & Fast SSDs</a></li>
+                    <li><a href="{% url 'catalog:about' %}">Our 28-Point QA Process</a></li>
+                    <li><a href="{% url 'catalog:about' %}#warranty">Warranty & Guarantee Terms</a></li>
+                </ul>
+            </div>
+
+            <!-- Col 4: Visit & Direct Contact -->
+            <div class="footer-col">
+                <h3 class="footer-title">Workshop & Visit</h3>
+                <p class="footer-address">
+                    <strong>Address:</strong><br>
+                    {{ STORE_ADDRESS }}
+                </p>
+                <p class="footer-hours">
+                    <strong>Hours:</strong><br>
+                    {{ STORE_HOURS }}
+                </p>
+                <div class="footer-contact-actions">
+                    <a href="https://wa.me/{{ STORE_WHATSAPP }}" target="_blank" rel="noopener" class="footer-contact-btn wa">
+                        WhatsApp: {{ STORE_WHATSAPP_DISPLAY }}
+                    </a>
+                    <a href="tel:{{ STORE_PHONE }}" class="footer-contact-btn phone">
+                        Call: {{ STORE_PHONE }}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container footer-bottom">
+            <p class="footer-copy">© {% now "Y" %} {{ STORE_NAME }} · All rights reserved.</p>
+            <p class="footer-note">Direct Inquiries · In-Store Pickup · Nationwide Delivery across obuasi,ghana</p>
         </div>
     </footer>
 
+    <!-- Theme and Mobile Menu Script -->
     <script>
-        // Simple dark/light mode toggle with persistence
+        // Dark / Light Mode
         const toggleBtn = document.getElementById('themeToggle');
         const savedTheme = localStorage.getItem('aims_theme');
         if (savedTheme === 'dark') {
@@ -56,6 +211,15 @@
                 document.body.classList.replace('theme-dark', 'theme-light');
                 localStorage.setItem('aims_theme', 'light');
             }
+        });
+
+        // Mobile Menu Drawer
+        const menuBtn = document.getElementById('mobileMenuToggle');
+        const drawer = document.getElementById('mobileDrawer');
+        menuBtn?.addEventListener('click', () => {
+            const isOpen = drawer.classList.toggle('open');
+            menuBtn.setAttribute('aria-expanded', isOpen);
+            drawer.setAttribute('aria-hidden', !isOpen);
         });
     </script>
     {% block extra_js %}{% endblock %}

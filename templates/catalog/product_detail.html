@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ product.name }} — A.I.M.S{% endblock %}
+{% block title %}{{ product.name }} — {{ STORE_NAME }}{% endblock %}
 
 {% block content %}
 <div class="product-detail-view">
     <!-- Breadcrumb -->
     <nav class="breadcrumb">
-        <a href="{% url 'catalog:product_list' %}" class="back-link">← All Products</a>
+        <a href="{% url 'catalog:home' %}">Home</a>
+        <span class="sep">/</span>
+        <a href="{% url 'catalog:product_list' %}" class="back-link">Hardware Catalog</a>
         {% if product.category %}
             <span class="sep">/</span>
             <a href="{% url 'catalog:product_list' %}?category={{ product.category.slug }}">{{ product.category.name }}</a>
@@ -20,8 +22,25 @@
             <div class="detail-img-box">
                 <img src="{{ product.display_image }}" alt="{{ product.name }}" class="detail-img">
                 {% if product.is_featured %}
-                    <span class="badge badge-featured">Featured Item</span>
+                    <span class="badge badge-featured">Featured Hardware</span>
                 {% endif %}
+                <span class="badge-condition-lg {{ product.condition }}">{{ product.get_condition_display }}</span>
+            </div>
+
+            <!-- Assurance Micro-badges under Image -->
+            <div class="detail-assurance-strip">
+                <div class="assure-card">
+                    <span class="assure-icon">✓</span>
+                    <span class="assure-text"><strong>Tested:</strong> 28-point bench check passed</span>
+                </div>
+                <div class="assure-card">
+                    <span class="assure-icon">🛡️</span>
+                    <span class="assure-text"><strong>Warranty:</strong> {{ product.warranty }}</span>
+                </div>
+                <div class="assure-card">
+                    <span class="assure-icon">🚚</span>
+                    <span class="assure-text"><strong>Delivery:</strong> obuasi,ghana same-day / Nationwide courier</span>
+                </div>
             </div>
         </div>
 
@@ -30,9 +49,9 @@
             <div class="info-top">
                 <span class="product-category">{{ product.category.name|default:"Hardware" }}</span>
                 {% if product.in_stock %}
-                    <span class="stock-badge in-stock"><span class="dot"></span> In Stock</span>
+                    <span class="stock-badge in-stock"><span class="dot"></span> In Stock & Ready for Pickup</span>
                 {% else %}
-                    <span class="stock-badge out-stock">Currently Unavailable</span>
+                    <span class="stock-badge out-stock">Currently Sold Out</span>
                 {% endif %}
             </div>
 
@@ -42,45 +61,105 @@
                 <p class="detail-tagline">{{ product.tagline }}</p>
             {% endif %}
 
+            <!-- Price & Warranty Bar -->
             <div class="detail-price-box">
-                <span class="price-label">Price</span>
-                <div class="detail-price">
-                    <span class="currency">GH₵</span>{{ product.price|floatformat:2 }}
+                <div class="price-wrap">
+                    <span class="price-label">Showroom Price</span>
+                    <div class="detail-price">
+                        <span class="currency">GH₵</span>{{ product.price|floatformat:2 }}
+                    </div>
+                </div>
+                <div class="warranty-badge-box">
+                    <span class="w-label">Included Protection</span>
+                    <span class="w-value">🛡️ {{ product.warranty }}</span>
                 </div>
             </div>
 
+            <!-- Primary High-Conversion Action Bar (WhatsApp First) -->
+            <div class="detail-actions-primary">
+                <a href="{{ product.whatsapp_url }}" target="_blank" rel="noopener" class="btn btn-wa-buy">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                    <div class="btn-wa-content">
+                        <span class="btn-wa-title">Inquire / Reserve on WhatsApp</span>
+                        <span class="btn-wa-sub">Instant response from our obuasi,ghana lab</span>
+                    </div>
+                </a>
+
+                <div class="detail-actions-secondary">
+                    <a href="tel:{{ STORE_PHONE }}" class="btn btn-secondary-action">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <span>Call Store ({{ STORE_PHONE }})</span>
+                    </a>
+                    <button type="button" class="btn btn-secondary-action" onclick="copyProductInquiry()">
+                        <span id="btnText">📋 Copy Spec Reference</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Key Features Checklist -->
+            {% if features_list %}
+            <div class="detail-specs-box">
+                <h3 class="specs-title">Key Hardware Highlights</h3>
+                <ul class="features-checklist">
+                    {% for feat in features_list %}
+                    <li>
+                        <span class="check-icon">✓</span>
+                        <span>{{ feat }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- Custom Upgrade & Modification Callout -->
+            <div class="detail-upgrade-box">
+                <div class="upgrade-icon">⚡</div>
+                <div class="upgrade-content">
+                    <h4>Want to Customize or Upgrade This Machine?</h4>
+                    <p>We can upgrade the NVMe SSD (up to 4TB), expand RAM, or apply premium thermal repasting before you collect or receive dispatch. Inquire on WhatsApp for upgrade pricing.</p>
+                </div>
+            </div>
+
+            <!-- Detailed Description -->
             {% if product.description %}
             <div class="detail-specs">
-                <h3>Details & Specifications</h3>
+                <h3>Detailed Description & Performance Profile</h3>
                 <div class="specs-content">
                     {{ product.description|linebreaks }}
                 </div>
             </div>
             {% endif %}
 
-            <!-- Minimalist Inquire/Action Bar (No Checkout/No Payments) -->
-            <div class="inquiry-box">
-                <button type="button" class="btn btn-inquire" id="inquireBtn" onclick="copyProductInquiry()">
-                    <span id="btnText">Copy Item Reference</span>
-                </button>
-                <a href="mailto:?subject=Inquiry regarding {{ product.name|urlencode }}&body=Hi, I am interested in {{ product.name }} listed at GH₵{{ product.price }}." class="btn btn-secondary">
-                    Contact via Email
-                </a>
+            <!-- Trade-In Prompt -->
+            <div class="detail-tradein-banner">
+                <div class="tradein-text">
+                    <strong>Have an older computer or MacBook to trade in?</strong>
+                    <p>We offer instant in-store valuation to deduct against your purchase.</p>
+                </div>
+                <a href="{% url 'catalog:services' %}?service=device-trade-in" class="btn-tradein-link">Learn About Trade-In →</a>
             </div>
-            <p class="inquiry-hint">Showcase catalog mode. No online payments or cart required.</p>
         </div>
     </div>
 
     <!-- Related Products -->
     {% if related_products %}
     <section class="related-section">
-        <h2 class="section-title">Related Items</h2>
+        <div class="section-header-row">
+            <div>
+                <span class="section-tag">SIMILAR ALTERNATIVES</span>
+                <h2 class="section-title">You Might Also Consider</h2>
+            </div>
+            <a href="{% url 'catalog:product_list' %}?category={{ product.category.slug }}" class="view-all-link">
+                More in {{ product.category.name }} →
+            </a>
+        </div>
         <div class="product-grid">
             {% for rel in related_products %}
             <article class="product-card">
                 <a href="{% url 'catalog:product_detail' rel.pk %}" class="card-link">
                     <div class="card-media">
                         <img src="{{ rel.display_image }}" alt="{{ rel.name }}" loading="lazy" class="product-img">
+                        <span class="badge-condition {{ rel.condition }}">{{ rel.get_condition_display }}</span>
                     </div>
                     <div class="card-body">
                         <span class="product-category">{{ rel.category.name|default:"Hardware" }}</span>
@@ -104,7 +183,7 @@
 {% block extra_js %}
 <script>
 function copyProductInquiry() {
-    const text = "{{ product.name }} (GH₵{{ product.price }}) - Ref: #{{ product.pk }}";
+    const text = "{{ product.name }} (GH₵{{ product.price }}) - Ref: #{{ product.pk }} | Available at {{ STORE_NAME }}";
     navigator.clipboard.writeText(text).then(() => {
         const btnText = document.getElementById('btnText');
         const original = btnText.innerText;

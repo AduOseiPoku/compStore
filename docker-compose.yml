@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    image: compstore-web:latest
+    container_name: compstore-web
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=django-insecure-dja_kziml6$&vcn5$)t)2%n6z@dhb^5ibnko-1=md1q#jc(df4
+      - DATABASE_URL=postgres://aims_user:aims_password@aims-postgres:5432/aims_db

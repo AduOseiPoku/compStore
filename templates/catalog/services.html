@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+
+{% block title %}Services & Workshop — {{ STORE_NAME }}{% endblock %}
+
+{% block content %}
+<!-- Services Header -->
+<section class="services-hero">
+    <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>ACCREDITED WORKSHOP & BENCH LAB</span>
+    </div>
+    <h1 class="page-title">Technical Services & Custom Engineering</h1>
+    <p class="page-subtitle">
+        We diagnose and fix laptops, MacBooks, and high-end PCs down to the component level. Transparent estimates, genuine replacement parts, and post-service warranty on all repairs.
+    </p>
+
+    <!-- Quick stats strip -->
+    <div class="service-guarantee-strip">
+        <div class="g-item">
+            <span class="g-icon">🔬</span>
+            <div>
+                <strong>Free Initial Check</strong>
+                <span>Basic physical diagnostics at no cost</span>
+            </div>
+        </div>
+        <div class="g-item">
+            <span class="g-icon">⚡</span>
+            <div>
+                <strong>Rapid Turnaround</strong>
+                <span>Same-day for batteries, screens & thermal repastes</span>
+            </div>
+        </div>
+        <div class="g-item">
+            <span class="g-icon">🛡️</span>
+            <div>
+                <strong>Post-Service Warranty</strong>
+                <span>All repair parts backed by store replacement</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Full Services Catalog -->
+<section class="section services-full-section">
+    <div class="section-header">
+        <span class="section-tag">SERVICE CATALOG</span>
+        <h2 class="section-heading">Explore Our Core Workshop Capabilities</h2>
+    </div>
+
+    <div class="services-detailed-grid">
+        {% for s in services %}
+        <div class="service-detail-card" id="service-{{ s.slug }}">
+            <div class="service-card-top">
+                <div class="service-card-icon">
+                    {% if s.icon == 'wrench' %}
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    {% elif s.icon == 'cpu' %}
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+                    {% elif s.icon == 'zap' %}
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    {% elif s.icon == 'swap' %}
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+                    {% elif s.icon == 'shield' %}
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    {% else %}
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    {% endif %}
+                </div>
+                <div class="service-badges-wrap">
+                    <span class="service-category-badge">{{ s.get_category_display }}</span>
+                    <span class="service-speed-badge">⏱ {{ s.turnaround_time }}</span>
+                </div>
+            </div>
+
+            <h3 class="service-detail-title">{{ s.name }}</h3>
+            <p class="service-detail-desc">{{ s.full_description }}</p>
+
+            <div class="service-detail-pricing">
+                <span class="p-label">Pricing Guide</span>
+                <span class="p-value">{{ s.price_starting_at }}</span>
+            </div>
+
+            <div class="service-detail-actions">
+                <a href="#quote-form" onclick="selectServiceInForm('{{ s.name|escapejs }}')" class="btn btn-secondary-action">
+                    Book Service / Get Quote ↓
+                </a>
+                <a href="{{ s.whatsapp_url }}" target="_blank" rel="noopener" class="btn btn-wa-inline">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+                    <span>Inquire via WhatsApp</span>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- The 4-Step Repair / Build Process -->
+<section class="section service-process-section">
+    <div class="section-header">
+        <span class="section-tag">HOW WE WORK</span>
+        <h2 class="section-heading">The 4-Step Workshop Process</h2>
+        <p class="section-subtext">No hidden charges. No unexpected surprises.</p>
+    </div>
+
+    <div class="process-grid">
+        <div class="process-card">
+            <span class="process-step">01</span>
+            <h4>Diagnostic Intake</h4>
+            <p>Bring your device to our obuasi,ghana workshop or send via courier. We log physical condition and perform preliminary diagnostic tests.</p>
+        </div>
+        <div class="process-card">
+            <span class="process-step">02</span>
+            <h4>Transparent Quotation</h4>
+            <p>We message you on WhatsApp with clear photos of the issue, itemized parts cost, and labor estimate before any work begins.</p>
+        </div>
+        <div class="process-card">
+            <span class="process-step">03</span>
+            <h4>Precision Execution</h4>
+            <p>Our technicians complete the screen replacement, micro-soldering, thermal repasting, or custom assembly with anti-static lab precautions.</p>
+        </div>
+        <div class="process-card">
+            <span class="process-step">04</span>
+            <h4>Stress Test & Warranty Handover</h4>
+            <p>We benchmark thermals, battery, and stability. You collect or receive delivery with written store warranty documentation.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Quote / Booking Form -->
+<section class="section service-form-section" id="quote-form">
+    <div class="form-container-card">
+        <div class="form-intro">
+            <span class="section-tag tag-accent">ONLINE CONSULTATION</span>
+            <h2 class="form-title">Request a Diagnostic or Custom Build Quote</h2>
+            <p class="form-sub">Fill out the details below and our lead technician will review your specifications and contact you on WhatsApp with an estimate within 1 business hour.</p>
+            
+            <div class="form-contact-quick">
+                <p><strong>Prefer immediate assistance?</strong></p>
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hi%20A.I.M.S,%20I'd%20like%20to%20request%20a%20repair%20quote" target="_blank" rel="noopener" class="btn btn-wa-block">
+                    Chat Directly on WhatsApp ({{ STORE_WHATSAPP_DISPLAY }})
+                </a>
+            </div>
+        </div>
+
+        <form method="post" action="{% url 'catalog:services' %}" class="quote-form-element">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="customer_name" class="form-label">Your Full Name *</label>
+                <input type="text" id="customer_name" name="customer_name" required placeholder="e.g. Kwame Mensah" class="form-input">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone_or_whatsapp" class="form-label">Phone / WhatsApp Number *</label>
+                    <input type="text" id="phone_or_whatsapp" name="phone_or_whatsapp" required placeholder="e.g. 024 123 4567" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address (Optional)</label>
+                    <input type="email" id="email" name="email" placeholder="e.g. kwame@example.com" class="form-input">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="service_type" class="form-label">Service Type *</label>
+                    <select id="service_type" name="service_type" class="form-select">
+                        <option value="Hardware Diagnostics & Repair">Hardware Diagnostics & Repair</option>
+                        <option value="Custom PC Rig Building">Custom PC Rig Building</option>
+                        <option value="Performance & Thermal Upgrades">Performance & Thermal Upgrades</option>
+                        <option value="Device Trade-In & Swaps">Device Trade-In & Swaps</option>
+                        <option value="OS, Security & Data Recovery">OS, Security & Data Recovery</option>
+                        <option value="Corporate / Bulk IT Procurement">Corporate / Bulk IT Procurement</option>
+                        <option value="Other / General Tech Inquiry">Other / General Tech Inquiry</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="budget" class="form-label">Target Budget (GH₵, Optional)</label>
+                    <input type="text" id="budget" name="budget" placeholder="e.g. GH₵15,000 or Open" class="form-input">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="device_model" class="form-label">Device Model / Target Specs (Optional)</label>
+                <input type="text" id="device_model" name="device_model" placeholder="e.g. MacBook Pro M1 16-inch 2021 or Gaming Rig with RTX 4070" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label for="issue_or_specs" class="form-label">Describe the Problem or Desired Rig Specifications *</label>
+                <textarea id="issue_or_specs" name="issue_or_specs" rows="4" required placeholder="Tell us what is happening (e.g. cracked display, laptop powers off when gaming, need 64GB RAM for video editing, etc.)" class="form-textarea"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-large btn-block">
+                Submit Service Request →
+            </button>
+            <p class="form-disclaimer">Your information is solely used to assist you. We never share customer data.</p>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function selectServiceInForm(serviceName) {
+    const select = document.getElementById('service_type');
+    if (select) {
+        for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].text.toLowerCase().includes(serviceName.toLowerCase()) || 
+                serviceName.toLowerCase().includes(select.options[i].text.toLowerCase())) {
+                select.selectedIndex = i;
+                break;
+            }
+        }
+    }
+}
+
+// Auto-check if service is passed in URL
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceSlug = urlParams.get('service');
+    if (serviceSlug) {
+        const targetCard = document.getElementById('service-' + serviceSlug);
+        if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth' });
+            targetCard.classList.add('highlight-pulse');
+        }
+    }
+});
+</script>
+{% endblock %}

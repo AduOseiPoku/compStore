@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
 
-{% block title %}A.I.M.S — Minimalist Hardware Catalog{% endblock %}
+{% block title %}Curated Hardware Catalog — {{ STORE_NAME }}{% endblock %}
 
 {% block content %}
 <section class="catalog-intro">
     <div class="intro-headline">
-        <h1 class="page-title">Curated Hardware</h1>
-        <p class="page-subtitle">Pristine devices & components. Clean specs, direct pricing.</p>
+        <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span>SHOWROOM INVENTORY · {{ total_items }} AVAILABLE UNITS</span>
+        </div>
+        <h1 class="page-title">Curated Hardware Catalog</h1>
+        <p class="page-subtitle">Every unit is physically tested, benchmarked, and sold with written store warranty. Direct WhatsApp inquiry & showroom pickup available.</p>
     </div>
 
+    <!-- Search Bar -->
     <form method="get" action="{% url 'catalog:product_list' %}" class="search-form">
         <div class="search-input-wrap">
-            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
@@ -19,12 +24,15 @@
                 type="text" 
                 name="q" 
                 value="{{ query }}" 
-                placeholder="Search models, chips, or specifications..." 
+                placeholder="Search MacBook, ThinkPad, RTX 4080, 4K Display, NVMe..." 
                 class="search-input"
                 autocomplete="off"
             >
             {% if selected_category %}
                 <input type="hidden" name="category" value="{{ selected_category }}">
+            {% endif %}
+            {% if selected_condition %}
+                <input type="hidden" name="condition" value="{{ selected_condition }}">
             {% endif %}
             {% if query %}
                 <a href="{% url 'catalog:product_list' %}{% if selected_category %}?category={{ selected_category }}{% endif %}" class="search-clear" title="Clear search">✕</a>
@@ -33,19 +41,37 @@
     </form>
 </section>
 
-<!-- Minimalist Category Navigation -->
-<nav class="category-bar">
-    <a href="{% url 'catalog:product_list' %}{% if query %}?q={{ query }}{% endif %}" 
-       class="category-pill {% if not selected_category %}active{% endif %}">
-       All Items <span class="count">({{ total_items }})</span>
-    </a>
-    {% for cat in categories %}
-        <a href="{% url 'catalog:product_list' %}?category={{ cat.slug }}{% if query %}&q={{ query }}{% endif %}" 
-           class="category-pill {% if selected_category == cat.slug %}active{% endif %}">
-           {{ cat.name }}
+<!-- Filter Section: Categories + Condition -->
+<div class="catalog-filter-controls">
+    <!-- Category Pills -->
+    <nav class="category-bar">
+        <a href="{% url 'catalog:product_list' %}{% if query %}?q={{ query }}{% endif %}{% if selected_condition %}&condition={{ selected_condition }}{% endif %}" 
+           class="category-pill {% if not selected_category %}active{% endif %}">
+           All Categories <span class="count">({{ total_items }})</span>
         </a>
-    {% endfor %}
-</nav>
+        {% for cat in categories %}
+            <a href="{% url 'catalog:product_list' %}?category={{ cat.slug }}{% if query %}&q={{ query }}{% endif %}{% if selected_condition %}&condition={{ selected_condition }}{% endif %}" 
+               class="category-pill {% if selected_category == cat.slug %}active{% endif %}">
+               {{ cat.name }}
+            </a>
+        {% endfor %}
+    </nav>
+
+    <!-- Condition Sub-Filter -->
+    <div class="condition-filter-bar">
+        <span class="filter-label">Condition:</span>
+        <a href="{% url 'catalog:product_list' %}{% if selected_category %}?category={{ selected_category }}{% endif %}{% if query %}&q={{ query }}{% endif %}"
+           class="cond-pill {% if not selected_condition %}active{% endif %}">
+           All Conditions
+        </a>
+        {% for cond_key, cond_label in conditions %}
+            <a href="{% url 'catalog:product_list' %}?condition={{ cond_key }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if query %}&q={{ query }}{% endif %}"
+               class="cond-pill {% if selected_condition == cond_key %}active{% endif %}">
+               {{ cond_label }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
 
 <!-- Product Grid -->
 {% if products %}
@@ -58,12 +84,13 @@
                 {% if product.is_featured %}
                     <span class="badge badge-featured">Featured</span>
                 {% endif %}
+                <span class="badge-condition {{ product.condition }}">{{ product.get_condition_display }}</span>
             </div>
             <div class="card-body">
                 <div class="card-meta">
                     <span class="product-category">{{ product.category.name|default:"Hardware" }}</span>
                     {% if product.in_stock %}
-                        <span class="stock-badge in-stock"><span class="dot"></span> Available</span>
+                        <span class="stock-badge in-stock"><span class="dot"></span> In Stock</span>
                     {% else %}
                         <span class="stock-badge out-stock">Unavailable</span>
                     {% endif %}
@@ -72,6 +99,12 @@
                 {% if product.tagline %}
                     <p class="product-tagline">{{ product.tagline }}</p>
                 {% endif %}
+
+                <div class="card-warranty-note">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>{{ product.warranty }}</span>
+                </div>
+
                 <div class="card-bottom">
                     <div class="product-price">
                         <span class="currency">GH₵</span>{{ product.price|floatformat:2 }}
@@ -80,15 +113,22 @@
                 </div>
             </div>
         </a>
+        <!-- Direct Quick WhatsApp Button -->
+        <div class="card-direct-actions">
+            <a href="{{ product.whatsapp_url }}" target="_blank" rel="noopener" class="btn-quick-wa">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                <span>Ask on WhatsApp</span>
+            </a>
+        </div>
     </article>
     {% endfor %}
 </div>
 
-<!-- Minimalist Pagination -->
+<!-- Pagination -->
 {% if page_obj.has_other_pages %}
 <nav class="pagination-bar">
     {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if query %}&q={{ query }}{% endif %}" class="page-nav-btn">← Previous</a>
+        <a href="?page={{ page_obj.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_condition %}&condition={{ selected_condition }}{% endif %}{% if query %}&q={{ query }}{% endif %}" class="page-nav-btn">← Previous</a>
     {% else %}
         <span class="page-nav-btn disabled">← Previous</span>
     {% endif %}
@@ -96,18 +136,19 @@
     <span class="page-indicator">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} ({{ total_items }} items)</span>
 
     {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if query %}&q={{ query }}{% endif %}" class="page-nav-btn">Next →</a>
+        <a href="?page={{ page_obj.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if selected_condition %}&condition={{ selected_condition }}{% endif %}{% if query %}&q={{ query }}{% endif %}" class="page-nav-btn">Next →</a>
     {% else %}
         <span class="page-nav-btn disabled">Next →</span>
     {% endif %}
 </nav>
 {% endif %}
+
 {% else %}
 <div class="empty-state">
     <div class="empty-icon">∅</div>
-    <h3>No items found</h3>
-    <p>There are no products matching your search or category filter.</p>
-    <a href="{% url 'catalog:product_list' %}" class="btn-reset">Reset Filters</a>
+    <h3>No matching hardware found</h3>
+    <p>There are no products matching your search query or filter selection.</p>
+    <a href="{% url 'catalog:product_list' %}" class="btn-reset">Reset All Filters</a>
 </div>
 {% endif %}
 {% endblock %}

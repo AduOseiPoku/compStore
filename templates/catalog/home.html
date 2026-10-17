@@ -1,0 +1,318 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ STORE_NAME }} — High-Performance Hardware, Custom Rigs & Certified Repairs{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span class="badge-dot"></span>
+            <span>SHOWROOM & TECHNICAL LAB · {{ STORE_CITY }}</span>
+        </div>
+        <h1 class="hero-title">
+            Pristine Hardware. <span class="text-gradient">Expert Repairs.</span><br>Built for Creators & Pros.
+        </h1>
+        <p class="hero-subtitle">
+            obuasi,ghana’s trusted destination for curated MacBooks, high-FPS custom desktop rigs, certified component diagnostics, and instant trade-in upgrades.
+        </p>
+
+        <div class="hero-actions">
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-primary btn-large">
+                <span>Explore Hardware Catalog</span>
+                <span class="btn-arrow">→</span>
+            </a>
+            <a href="{% url 'catalog:services' %}" class="btn btn-secondary btn-large">
+                <span>Book a Repair / Custom Build</span>
+            </a>
+            <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hello%20A.I.M.S,%20I'm%20interested%20in%20consulting%20with%20a%20technician" target="_blank" rel="noopener" class="btn btn-wa-pill">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                <span>WhatsApp Desk</span>
+            </a>
+        </div>
+
+        <!-- Trust Stats Strip -->
+        <div class="hero-stats-strip">
+            <div class="stat-item">
+                <span class="stat-number">28-Point</span>
+                <span class="stat-label">Hardware QA on every unit</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number">6–12 Mo</span>
+                <span class="stat-label">Direct Store Warranty</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number">Same-Day</span>
+                <span class="stat-label">Diagnostics & Screen/Battery Swaps</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number">Trade-In</span>
+                <span class="stat-label">Swap your old machine for credit</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- "What We Do" Core Services Section -->
+<section class="section services-summary-section">
+    <div class="section-header">
+        <span class="section-tag">WHAT WE DO</span>
+        <h2 class="section-heading">More Than Just a Store. A Dedicated Tech Lab.</h2>
+        <p class="section-subtext">
+            From cracked MacBook screens and overheating laptops to bespoke 4K editing workstations, here is how we serve individuals and businesses across obuasi,ghana.
+        </p>
+    </div>
+
+    <div class="services-grid">
+        {% for service in services %}
+        <div class="service-card">
+            <div class="service-icon-box">
+                {% if service.icon == 'wrench' %}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                {% elif service.icon == 'cpu' %}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
+                {% elif service.icon == 'zap' %}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                {% elif service.icon == 'swap' %}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+                {% elif service.icon == 'shield' %}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                {% else %}
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                {% endif %}
+            </div>
+            <div class="service-body">
+                <span class="service-pill">{{ service.get_category_display }}</span>
+                <h3 class="service-title">{{ service.name }}</h3>
+                <p class="service-description">{{ service.short_description }}</p>
+                
+                <div class="service-meta">
+                    <div class="service-meta-item">
+                        <span class="meta-label">Starting at</span>
+                        <span class="meta-value">{{ service.price_starting_at }}</span>
+                    </div>
+                    <div class="service-meta-item">
+                        <span class="meta-label">Turnaround</span>
+                        <span class="meta-value">{{ service.turnaround_time }}</span>
+                    </div>
+                </div>
+
+                <div class="service-card-actions">
+                    <a href="{% url 'catalog:services' %}?service={{ service.slug }}" class="btn-service-link">
+                        Details & Quote Form →
+                    </a>
+                    <a href="{{ service.whatsapp_url }}" target="_blank" rel="noopener" class="btn-service-wa" title="Inquire on WhatsApp">
+                        WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="services-footer-banner">
+        <div class="banner-text">
+            <h3>Need a fast diagnostic or custom build recommendation?</h3>
+            <p>Our technicians are available in-store or on WhatsApp to give you honest, no-pressure advice.</p>
+        </div>
+        <a href="{% url 'catalog:services' %}" class="btn btn-primary">View Full Service Menu & Quote Form →</a>
+    </div>
+</section>
+
+<!-- Featured Hardware Showcase -->
+<section class="section featured-hardware-section">
+    <div class="section-header-row">
+        <div>
+            <span class="section-tag">CURATED SHOWROOM</span>
+            <h2 class="section-heading">Featured Hardware & Rigs</h2>
+            <p class="section-subtext">Every machine is physically inspected, benchmarked, and backed by warranty.</p>
+        </div>
+        <a href="{% url 'catalog:product_list' %}" class="btn btn-secondary view-all-btn">
+            View All Hardware ({{ total_products }}) →
+        </a>
+    </div>
+
+    <div class="product-grid">
+        {% for product in featured_products %}
+        <article class="product-card">
+            <a href="{% url 'catalog:product_detail' product.pk %}" class="card-link" aria-label="View {{ product.name }}">
+                <div class="card-media">
+                    <img src="{{ product.display_image }}" alt="{{ product.name }}" loading="lazy" class="product-img">
+                    <span class="badge badge-featured">Featured</span>
+                    <span class="badge-condition {{ product.condition }}">{{ product.get_condition_display }}</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-meta">
+                        <span class="product-category">{{ product.category.name|default:"Hardware" }}</span>
+                        {% if product.in_stock %}
+                            <span class="stock-badge in-stock"><span class="dot"></span> Available</span>
+                        {% else %}
+                            <span class="stock-badge out-stock">Sold Out</span>
+                        {% endif %}
+                    </div>
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    {% if product.tagline %}
+                        <p class="product-tagline">{{ product.tagline }}</p>
+                    {% endif %}
+
+                    <div class="card-warranty-note">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span>{{ product.warranty }}</span>
+                    </div>
+
+                    <div class="card-bottom">
+                        <div class="product-price">
+                            <span class="currency">GH₵</span>{{ product.price|floatformat:2 }}
+                        </div>
+                        <span class="view-prompt">Details & Chat →</span>
+                    </div>
+                </div>
+            </a>
+            <!-- Direct WhatsApp Quick Action Button -->
+            <div class="card-direct-actions">
+                <a href="{{ product.whatsapp_url }}" target="_blank" rel="noopener" class="btn-quick-wa">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"></path></svg>
+                    <span>Inquire on WhatsApp</span>
+                </a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Custom PC Builds & Workstations Spotlight -->
+<section class="section custom-rig-spotlight">
+    <div class="rig-spotlight-inner">
+        <div class="rig-spotlight-text">
+            <span class="section-tag tag-accent">BESPOKE WORKSTATIONS</span>
+            <h2 class="spotlight-title">Need a Custom PC Built for Your Workflow?</h2>
+            <p class="spotlight-desc">
+                Whether you edit 4K/8K video in Premiere, render complex scenes in Blender, design in AutoCAD, or grind competitive gaming at 240Hz — off-the-shelf prebuilts often have cheap power supplies and poor airflow.
+            </p>
+            <ul class="spotlight-checklist">
+                <li><strong>Balanced Hardware:</strong> Zero bottlenecking between CPU, GPU, and RAM speeds.</li>
+                <li><strong>Acoustic & Thermal Optimization:</strong> Tuned fan curves and high-grade thermal paste for silent operation under load.</li>
+                <li><strong>24-Hour Burn-In Stress Test:</strong> FurMark and Prime95 verified stability before handover.</li>
+                <li><strong>1-Year Build Warranty:</strong> Comprehensive parts and labor warranty included.</li>
+            </ul>
+            <div class="spotlight-actions">
+                <a href="{% url 'catalog:services' %}?service=custom-pc-builds" class="btn btn-primary">Request a Custom Build Quote</a>
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hi%20A.I.M.S,%20I'm%20looking%20to%20build%20a%20custom%20PC.%20My%20budget%20is%20GH₵" target="_blank" rel="noopener" class="btn btn-secondary">Discuss Specs on WhatsApp</a>
+            </div>
+        </div>
+        <div class="rig-spotlight-visual">
+            <div class="visual-card">
+                <div class="visual-header">
+                    <span class="vis-dot red"></span>
+                    <span class="vis-dot yellow"></span>
+                    <span class="vis-dot green"></span>
+                    <span class="vis-title">AIMS-LAB-BENCHMARK-PASS.LOG</span>
+                </div>
+                <div class="visual-code">
+                    <p class="code-line"><span class="c-blue">✓ CPU Test:</span> AMD Ryzen 9 7900X (0 Throttling / 64°C)</p>
+                    <p class="code-line"><span class="c-blue">✓ GPU Stress:</span> RTX 4080 16GB (320W sustained / 0 artifacts)</p>
+                    <p class="code-line"><span class="c-blue">✓ Memory:</span> 32GB DDR5-6000 CL30 EXPO (MemTest86 Clean)</p>
+                    <p class="code-line"><span class="c-blue">✓ Storage:</span> 2TB Gen4 NVMe (7,420 MB/s Read Verified)</p>
+                    <p class="code-line"><span class="c-green">✓ Verdict:</span> 100% Certified Ready for Handover</p>
+                </div>
+                <div class="visual-badge">
+                    <span class="vis-stamp">A.I.M.S CERTIFIED</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- The 4 Trust & Guarantee Pillars -->
+<section class="section trust-pillars-section">
+    <div class="section-header">
+        <span class="section-tag">WHY CHOOSE US</span>
+        <h2 class="section-heading">Built on Honesty, Precision & Warranty.</h2>
+        <p class="section-subtext">We eliminate the uncertainty of buying computers and fixing electronics in obuasi,ghana.</p>
+    </div>
+
+    <div class="trust-grid">
+        <div class="trust-card">
+            <div class="trust-icon">🛡️</div>
+            <h3>Written Store Warranty</h3>
+            <p>Every laptop, custom rig, and display comes with a transparent warranty agreement (6 to 12 months). If hardware fails under warranty, we repair or replace it without excuses.</p>
+        </div>
+        <div class="trust-card">
+            <div class="trust-icon">🔬</div>
+            <h3>28-Point Diagnostic Rigor</h3>
+            <p>Before any device enters our showroom, its battery health, thermals, SSD longevity, screen uniformity, and keyboard switches are verified through our laboratory test suite.</p>
+        </div>
+        <div class="trust-card">
+            <div class="trust-icon">💬</div>
+            <h3>Direct WhatsApp Tech Support</h3>
+            <p>No endless phone bots or unanswered tickets. You talk directly with the technician who inspected or worked on your computer.</p>
+        </div>
+        <div class="trust-card">
+            <div class="trust-icon">🔄</div>
+            <h3>Fair Value Trade-In Program</h3>
+            <p>Ready to upgrade? Bring your current laptop or desktop to our obuasi,ghana workshop for a 15-minute evaluation and trade it in toward a newer machine.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Verified Customer Testimonials -->
+{% if testimonials %}
+<section class="section testimonials-section">
+    <div class="section-header">
+        <span class="section-tag">CLIENT STORIES</span>
+        <h2 class="section-heading">What Creators & Engineers Say</h2>
+    </div>
+
+    <div class="testimonials-grid">
+        {% for t in testimonials %}
+        <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">"{{ t.quote }}"</p>
+            <div class="testimonial-author-box">
+                <div class="author-avatar">{{ t.client_name|slice:":1" }}</div>
+                <div>
+                    <h4 class="author-name">{{ t.client_name }}</h4>
+                    <p class="author-role">{{ t.role_or_location }}</p>
+                    <span class="author-service">Service: {{ t.service_rendered }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Visit Us / Store Location Banner -->
+<section class="section store-visit-section">
+    <div class="store-visit-card">
+        <div class="visit-info">
+            <span class="section-tag tag-accent">VISIT OUR WORKSHOP</span>
+            <h2 class="visit-heading">Experience the Hardware in Person.</h2>
+            <p class="visit-sub">
+                Drop by our physical workshop to test any machine on display, bring in your PC for diagnostics, or discuss a custom build with our technicians over coffee.
+            </p>
+            <div class="visit-details-grid">
+                <div class="v-detail">
+                    <span class="v-label">Location</span>
+                    <span class="v-value">{{ STORE_ADDRESS }}</span>
+                </div>
+                <div class="v-detail">
+                    <span class="v-label">Operating Hours</span>
+                    <span class="v-value">{{ STORE_HOURS }}</span>
+                </div>
+                <div class="v-detail">
+                    <span class="v-label">Direct Lines</span>
+                    <span class="v-value">{{ STORE_PHONE }} / WhatsApp: {{ STORE_WHATSAPP_DISPLAY }}</span>
+                </div>
+            </div>
+            <div class="visit-actions">
+                <a href="{% url 'catalog:contact' %}" class="btn btn-primary">Location Map & Directions →</a>
+                <a href="https://wa.me/{{ STORE_WHATSAPP }}?text=Hi%20A.I.M.S,%20I'm%20planning%20to%20visit%20your%20workshop%20today" target="_blank" rel="noopener" class="btn btn-secondary">Notify Us on WhatsApp</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
